@@ -16,6 +16,8 @@ addons:
 jdk:
 - oraclejdk8
 
+
+
 # Use the gradle wrapper for 2.7 instead of default 2.2
 before_install:
 - chmod +x gradlew
@@ -30,6 +32,7 @@ install:
 # Build the Project.
 script:
 - ./gradlew setup
+- ./gradlew build
 
 
 # Clean up after Gradle
