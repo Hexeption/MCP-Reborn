@@ -1,0 +1,42 @@
+# Tell Travis this is a Java project
+language: java
+
+# Tell Travis we want container-based builds.
+sudo: false
+
+# Serius i got over 40 Mails today...
+notifications:
+  email: false
+
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
+
+jdk:
+- oraclejdk8
+
+# Use the gradle wrapper for 2.7 instead of default 2.2
+before_install:
+- chmod +x gradlew
+
+# Prepare the workspace.
+install:
+- mkdir src
+- mkdir src/main
+- mkdir src/main/java
+
+
+# Build the Project.
+script:
+- ./gradlew setup
+
+
+# Clean up after Gradle
+env:
+  global:
+    TERM=dumb
+
+# So the cache doesn't get rebuilt every time.
+before_cache:
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
