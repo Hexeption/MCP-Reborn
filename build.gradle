@@ -2,12 +2,12 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'http://files.minecraftforge.net/maven' }
-        maven { url = 'http://repo.strezz.org/artifactory/list/Strezz-Central/'}
+        maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:3.0.28'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.0.43'
     }
 }
 
@@ -19,7 +19,7 @@ version = '1.0.0'
 project(':mcp') {
     apply plugin: 'net.minecraftforge.gradle.forgedev.mcp'
     mcp {
-        config = 'de.oceanlabs.mcp:mcp_config:1.13.1'
+        config = 'de.oceanlabs.mcp:mcp_config:1.13.2'
         pipeline = 'joined'
     }
 }
@@ -29,13 +29,13 @@ apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle.forgedev.patcher'
 repositories {
     mavenCentral()
-    maven { url = 'http://repo.strezz.org/artifactory/list/Strezz-Central/'}
+    maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
 }
 patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
-    mappings channel: 'snapshot', version: '20181014-1.13.1'
-    mcVersion = '1.13.1'
+    mappings channel: 'snapshot', version: '20190314-1.13.2'
+    mcVersion = '1.13.2'
 }
 task runclient(type: JavaExec) {
     group = "MCP"
