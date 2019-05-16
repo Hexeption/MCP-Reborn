@@ -19,7 +19,7 @@ version = '1.0.0'
 project(':mcp') {
     apply plugin: 'net.minecraftforge.gradle.forgedev.mcp'
     mcp {
-        config = 'de.oceanlabs.mcp:mcp_config:1.13.2'
+        config = 'de.oceanlabs.mcp:mcp_config:1.14'
         pipeline = 'joined'
     }
 }
@@ -44,7 +44,7 @@ task runclient(type: JavaExec) {
         mkdir 'runclient'
     }
     classpath sourceSets.main.runtimeClasspath
-    args = ['--accessToken', '0', '--version', '1.13']
+    args = ['--accessToken', '0', '--version', '1.14']
     main 'net.minecraft.client.main.Main'
     workingDir 'runclient'
 }
