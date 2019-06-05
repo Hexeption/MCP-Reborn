@@ -2,7 +2,7 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'http://files.minecraftforge.net/maven' }
-        maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
+        maven { url = 'http://repo.hexeption.co.uk/artifactory/list/PreMCP/'}
         jcenter()
         mavenCentral()
     }
@@ -34,8 +34,8 @@ repositories {
 patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
-    mappings channel: 'snapshot', version: '20190314-1.13.2'
-    mcVersion = '1.13.2'
+    mappings channel: 'stable', version: '49-1.14'
+    mcVersion = '1.14'
 }
 task runclient(type: JavaExec) {
     group = "MCP"
