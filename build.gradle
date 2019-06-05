@@ -19,7 +19,7 @@ version = '1.0.0'
 project(':mcp') {
     apply plugin: 'net.minecraftforge.gradle.forgedev.mcp'
     mcp {
-        config = 'de.oceanlabs.mcp:mcp_config:1.14'
+        config = 'de.oceanlabs.mcp:mcp_config:1.14.2'
         pipeline = 'joined'
     }
 }
@@ -34,7 +34,7 @@ repositories {
 patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
-    mappings channel: 'stable', version: '49-1.14'
+    mappings channel: 'snapshot', version: '20190605-1.14.2'
     mcVersion = '1.14'
 }
 task runclient(type: JavaExec) {
