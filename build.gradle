@@ -20,7 +20,7 @@ project(':mcp') {
     apply plugin: 'net.minecraftforge.gradle.forgedev.mcp'
     mcp {
         config = 'de.oceanlabs.mcp:mcp_config:1.14.2'
-        pipeline = 'joined'
+        pipeline = 'client'
     }
 }
 
