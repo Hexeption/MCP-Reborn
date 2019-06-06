@@ -21,6 +21,12 @@
 | 1.12.1 | ❌    |
 | 1.12 | ❌    |
 
+### Known issues:
+
+* There's no sound in game during debugging.
+* You must restart the game to see changes that you did in code during running it.
+* Every time you debug the game the IDE recompile the whole code which takes more time.
+
 ### Creators:
 
 * Hexeption
