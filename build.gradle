@@ -35,7 +35,7 @@ patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
     mappings channel: 'snapshot', version: '20190605-1.14.2'
-    mcVersion = '1.14'
+    mcVersion = '1.14.2'
 }
 task runclient(type: JavaExec) {
     group = "MCP"
