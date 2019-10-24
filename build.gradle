@@ -2,41 +2,71 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'http://files.minecraftforge.net/maven' }
-        maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:3.0.43'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
     }
 }
 
 apply plugin: 'eclipse'
+apply plugin: 'net.minecraftforge.gradle.forgedev.patcher'
 
-group = 'pre-mcp'
+configurations {
+    shade
+    compile.extendsFrom shade
+}
+
+group = 'me.yourname'
 version = '1.0.0'
+
+ext {
+    minecraft_version = '1.14.4'
+    mcp_version = '20190829.143755'
+    mappings_channel = 'snapshot'
+    mappings_version = '20190719-1.14.3'
+}
+
+repositories {
+    mavenCentral()
+
+}
+
+dependencies {
+    shade 'net.minecraftforge:forgespi:1.1.+'
+//    Use the shade to add the lib to the jar
+//    or use compile if you want to load the lib from the version.json
+//    from a maven repo
+//    shade 'package-here'
+//    compile 'package-here'
+}
 
 project(':mcp') {
     apply plugin: 'net.minecraftforge.gradle.forgedev.mcp'
     mcp {
-        config = 'de.oceanlabs.mcp:mcp_config:1.13.2'
+        config = minecraft_version + '-' + mcp_version
         pipeline = 'joined'
     }
 }
 
 evaluationDependsOn(':mcp')
-apply plugin: 'eclipse'
-apply plugin: 'net.minecraftforge.gradle.forgedev.patcher'
-repositories {
-    mavenCentral()
-    maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
-}
+
 patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
-    mappings channel: 'snapshot', version: '20190314-1.13.2'
-    mcVersion = '1.13.2'
+    mappings channel: mappings_channel, version: mappings_version
+    mcVersion = '1.14.4'
 }
+
+jar {
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
+}
+
 task runclient(type: JavaExec) {
     group = "MCP"
     description = "Runs the client"
@@ -44,7 +74,11 @@ task runclient(type: JavaExec) {
         mkdir 'runclient'
     }
     classpath sourceSets.main.runtimeClasspath
-    args = ['--accessToken', '0', '--version', '1.13']
+    args '--gameDir', '.'
+    args '--version', minecraft_version
+    args '--assetsDir', downloadAssets.output
+    args '--assetIndex', '{asset_index}'
+    args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
     workingDir 'runclient'
 }
