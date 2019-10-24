@@ -1,4 +1,5 @@
-## MCP-Reborn
+## MCP-Reborn [![Build Status](https://github.com/Hexeption/MCP-Reborn/workflows/Java%20CI/badge.svg)](https://github.com/Hexeption/MCP-Reborn/actions?workflow=Java+CI)
+
 #### MCP-Reborn is a MCP (Mod Coder Pack) for minecraft for making modded clients for minecraft and researching it's code.
 
 #### Based on: MCPConfig and ForgeGradle by MinecraftForge Team.
@@ -32,4 +33,3 @@
 
 #### Special thanks to: **MinecraftForge** Team who made this tool possible. ❤
 
-### BuildStatus: [![Build Status](https://travis-ci.org/Hexeption/PRE-MCP.svg?branch=master)](https://travis-ci.org/Hexeption/PRE-MCP)
