@@ -24,7 +24,7 @@
 
 ### Known issues:
 
-* There's no sound in game during debugging.
+~~There's no sound in game during debugging.~~
 
 ### Creators:
 
