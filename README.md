@@ -34,7 +34,7 @@
 <img width="284" alt="373de4ebc77d5079584370dd7fbe8745" src="https://user-images.githubusercontent.com/4052647/46925924-71b7b680-d026-11e8-9c29-e3ed2e43f810.png">
 
 
-- To build the client run build then the releace jar will be in  the "build/libs/"
+- To build the client run build then the release jar will be in  the "build/libs/"
 <img width="266" alt="a647ab0eb336062ffd80c8e053e10266" src="https://user-images.githubusercontent.com/4052647/46925963-a297eb80-d026-11e8-8b02-cb621b559511.png">
 
 ### Creators:
