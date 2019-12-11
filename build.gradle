@@ -22,10 +22,10 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.14.4'
-    mcp_version = '20190829.143755'
+    minecraft_version = '1.15'
+    mcp_version = '20191210.153145'
     mappings_channel = 'snapshot'
-    mappings_version = '20190719-1.14.3'
+    mappings_version = '20191211-1.14.3'
 }
 
 repositories {
@@ -56,7 +56,7 @@ patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
     mappings channel: mappings_channel, version: mappings_version
-    mcVersion = '1.14.4'
+    mcVersion = minecraft_version
 }
 
 jar {
@@ -70,17 +70,14 @@ jar {
 task runclient(type: JavaExec) {
     group = "MCP"
     description = "Runs the client"
-    doFirst {
-        mkdir 'runclient'
-    }
     classpath sourceSets.main.runtimeClasspath
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', downloadAssets.output
-    args '--assetIndex', '{asset_index}'
+    args '--assetIndex', minecraft_version
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
-    workingDir 'runclient'
+    workingDir 'run'
 }
 
 task setup() {
