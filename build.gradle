@@ -23,7 +23,7 @@ version = '1.0.0'
 
 ext {
     minecraft_version = '1.15'
-    mcp_version = '20191210.153145'
+    mcp_version = '20191212.203412'
     mappings_channel = 'snapshot'
     mappings_version = '20191211-1.14.3'
 }
