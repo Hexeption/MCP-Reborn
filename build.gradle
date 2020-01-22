@@ -22,10 +22,10 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.15.1'
-    mcp_version = '20191217.105819'
+    minecraft_version = '1.15.2'
+    mcp_version = '20200122.131323'
     mappings_channel = 'snapshot'
-    mappings_version = '20200120-1.15.1'
+    mappings_version = '20200122-1.15.1'
 }
 
 repositories {
@@ -74,7 +74,7 @@ task runclient(type: JavaExec) {
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', downloadAssets.output
-    args '--assetIndex', minecraft_version
+    args '--assetIndex', "1.15"
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
     workingDir 'run'
