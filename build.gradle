@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 buildscript {
     repositories {
         mavenLocal()
@@ -71,6 +73,9 @@ task runclient(type: JavaExec) {
     group = "MCP"
     description = "Runs the client"
     classpath sourceSets.main.runtimeClasspath
+    if (Os.isFamily(Os.FAMILY_MAC)) {
+        jvmArgs '-XstartOnFirstThread'
+    }
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', downloadAssets.output
