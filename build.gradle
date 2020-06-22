@@ -25,9 +25,9 @@ version = '1.0.0'
 
 ext {
     minecraft_version = '1.15.2'
-    mcp_version = '20200122.131323'
+    mcp_version = '20200515.085601'
     mappings_channel = 'snapshot'
-    mappings_version = '20200122-1.15.1'
+    mappings_version = '20200622-1.15.1'
 }
 
 repositories {
