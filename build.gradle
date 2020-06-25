@@ -24,10 +24,10 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.15.2'
-    mcp_version = '20200515.085601'
+    minecraft_version = '1.16.1'
+    mcp_version = '20200625.134731'
     mappings_channel = 'snapshot'
-    mappings_version = '20200622-1.15.1'
+    mappings_version = '20200514-1.16'
 }
 
 repositories {
@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    shade 'net.minecraftforge:forgespi:1.1.+'
+    shade 'net.minecraftforge:forgespi:3.0.+'
 //    Use the shade to add the lib to the jar
 //    or use compile if you want to load the lib from the version.json
 //    from a maven repo
@@ -79,7 +79,7 @@ task runclient(type: JavaExec) {
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', downloadAssets.output
-    args '--assetIndex', "1.15"
+    args '--assetIndex', "1.16"
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
     workingDir 'run'
@@ -89,6 +89,17 @@ task setup() {
     group = "MCP"
     description = "Setups the dev workspace"
     dependsOn ':extractMapped'
+    mkdir 'run/assets'
+    copy {
+        from downloadAssets.output.path
+        into 'run/assets'
+    }
+}
+
+task copyAssets {
+    group = "MCP"
+    description = "Download and place the assets into the run folder"
+    dependsOn ':downloadAssets'
     mkdir 'run/assets'
     copy {
         from downloadAssets.output.path

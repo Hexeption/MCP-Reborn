@@ -16,3 +16,6 @@ gradle-app.setting
 #IDE files
 .idea
 *.iml
+run/
+
+out/
