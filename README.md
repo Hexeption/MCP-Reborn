@@ -41,6 +41,10 @@
 - To build the client run build then the release jar will be in  the "build/libs/"
 <img width="266" alt="a647ab0eb336062ffd80c8e053e10266" src="https://user-images.githubusercontent.com/4052647/46925963-a297eb80-d026-11e8-8b02-cb621b559511.png">
 
+### How to add Optifine
+[![](http://img.youtube.com/vi/ocz1tPI_YSE/0.jpg)](http://www.youtube.com/watch?v=ocz1tPI_YSE "How to add Optifine to MCP Reborn")
+
+
 ### Creators:
 
 * Hexeption
