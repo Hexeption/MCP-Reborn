@@ -24,8 +24,8 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.16.1'
-    mcp_version = '20200625.160719'
+    minecraft_version = '1.16.2'
+    mcp_version = '20200812.004259'
     mappings_channel = 'snapshot'
     mappings_version = '20200514-1.16'
 }
