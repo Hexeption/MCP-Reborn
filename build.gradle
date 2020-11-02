@@ -24,10 +24,10 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.16.3'
-    mcp_version = '20200911.084530'
+    minecraft_version = '1.16.4'
+    mcp_version = '20201102.104115'
     mappings_channel = 'snapshot'
-    mappings_version = '20200514-1.16'
+    mappings_version = '20201028-1.16.3'
 }
 
 repositories {
