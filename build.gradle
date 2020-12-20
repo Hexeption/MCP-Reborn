@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 buildscript {
     repositories {
         mavenLocal()
@@ -73,7 +71,7 @@ task runclient(type: JavaExec) {
     group = "MCP"
     description = "Runs the client"
     classpath sourceSets.main.runtimeClasspath
-    if (Os.isFamily(Os.FAMILY_MAC)) {
+    if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         jvmArgs '-XstartOnFirstThread'
     }
     args '--gameDir', '.'
