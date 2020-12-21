@@ -48,7 +48,8 @@
 - Once you have reached a final result you are happy with, there is a bit of a process to turn it into a JAR file that
   can actually run from the game launcher. Go to the "build" folder in the gradle tasks, an run the "build" task. This
   will generate the new executable JAR file in the "build/libs/" directory.
-  <img width="266" alt="a647ab0eb336062ffd80c8e053e10266" src="https://user-images.githubusercontent.com/4052647/46925963-a297eb80-d026-11e8-8b02-cb621b559511.png">
+  
+<img width="266" alt="a647ab0eb336062ffd80c8e053e10266" src="https://user-images.githubusercontent.com/4052647/46925963-a297eb80-d026-11e8-8b02-cb621b559511.png">
 
 - With that jar generated, open your Minecraft versions folder. On Linux, this defaults to ~/.minecraft/versions. On
   windows, it's in Appdata/Roaming/.minecraft/versions. Find the variant your modded version is based on (that is, if
