@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:3.0.43'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.0.+'
     }
 }
 
@@ -22,8 +22,8 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.16.4'
-    mcp_version = '20201102.104115'
+    minecraft_version = '1.16.5'
+    mcp_version = '20210115.111550'
     mappings_channel = 'snapshot'
     mappings_version = '20201028-1.16.3'
 }
