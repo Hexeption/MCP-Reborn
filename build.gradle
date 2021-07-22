@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:4.1.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5+'
     }
 }
 
@@ -13,6 +13,12 @@ import net.minecraftforge.forge.tasks.*
 
 apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle.patcher'
+
+println(' Java: ' + System.getProperty('java.version') +
+        ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ')' +
+        ' Arch: ' + System.getProperty('os.arch'))
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 configurations {
     shade
@@ -23,11 +29,11 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.16.5'
-    mcp_version = '20210115.111550'
+    minecraft_version = '1.17.1'
+    mcp_version = '20210706.113038'
     mappings_channel = 'official'
-    mappings_version = '1.16.5'
-    spi_version = '3.2.0'
+    mappings_version = '1.17.1'
+    spi_version = '4.0.9'
 }
 
 repositories {
@@ -35,7 +41,7 @@ repositories {
 }
 
 dependencies {
-    shade 'net.minecraftforge:forgespi:' + spi_version
+    implementation 'net.minecraftforge:forgespi:' + spi_version
 //    Use the shade to add the lib to the jar
 //    or use compile if you want to load the lib from the version.json
 //    from a maven repo
@@ -78,7 +84,7 @@ task runclient(type: JavaExec) {
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', downloadAssets.output
-    args '--assetIndex', "1.16"
+    args '--assetIndex', "1.17"
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
     workingDir 'run'
