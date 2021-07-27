@@ -7,6 +7,9 @@
 ### Supported versions:
 1.13->1.17.1
 
+### Important
+1.17+ Needs JDK 16
+
 ### How to use
 
 - Import the build.gradle in Intellij.
