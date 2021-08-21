@@ -30,6 +30,7 @@ apply plugin: 'net.minecraftforge.gradle.forgedev.patcher'
 repositories {
     mavenCentral()
     maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
+    maven { url = 'https://libraries.minecraft.net/'}
 }
 patcher {
     parent = project(':mcp')
