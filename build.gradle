@@ -91,6 +91,7 @@ task runclient(type: JavaExec) {
 }
 
 task runserver(type: JavaExec) {
+    standardInput = System.in
     group = "MCP"
     description = "Runs the server"
     classpath sourceSets.main.runtimeClasspath
