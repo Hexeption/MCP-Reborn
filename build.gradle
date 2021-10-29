@@ -90,6 +90,14 @@ task runclient(type: JavaExec) {
     workingDir 'run'
 }
 
+task runserver(type: JavaExec) {
+    group = "MCP"
+    description = "Runs the server"
+    classpath sourceSets.main.runtimeClasspath
+    main 'net.minecraft.server.Main'
+    workingDir 'runserver'
+}
+
 task setup() {
     group = "MCP"
     description = "Setups the dev workspace"
