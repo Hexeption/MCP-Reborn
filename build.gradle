@@ -104,6 +104,7 @@ task setup() {
     group = "MCP"
     description = "Setups the dev workspace"
     dependsOn ':extractMapped'
+    dependsOn ':downloadAssets'
     mkdir 'run/assets'
     copy {
         from downloadAssets.output.path
