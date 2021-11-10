@@ -34,7 +34,7 @@ ext {
     minecraft_version = '1.17.1'
     mcp_version = '20210706.113038'
     mappings_channel = 'parchment'
-    mappings_version = '2021.11.10-1.17.1'
+    mappings_version = 'BLEEDING-SNAPSHOT-1.17.1'
     spi_version = '4.0.9'
 }
 
