@@ -8,7 +8,8 @@
 1.13->1.18.1
 
 ### Important
-1.17+ Needs JDK 16
+1.17 Needs JDK 16
+1.18 Needs JDK 17
 
 ### How to use
 
