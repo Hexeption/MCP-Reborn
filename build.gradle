@@ -3,16 +3,20 @@ buildscript {
         mavenLocal()
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:5+'
+        classpath "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.3"
     }
 }
 
 import net.minecraftforge.forge.tasks.*
+import org.jetbrains.gradle.ext.*
 
 apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle.patcher'
+apply plugin: "org.jetbrains.gradle.plugin.idea-ext"
 
 println(' Java: ' + System.getProperty('java.version') +
         ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ')' +
@@ -109,5 +113,15 @@ task copyAssets {
     copy {
         from downloadAssets.output.path
         into 'run/assets'
+    }
+}
+
+idea.project.settings {
+    runConfigurations {
+        "Minecraft"(Application) {
+            mainClass = 'mcp.client.Start'
+            workingDirectory = "$projectDir/run"
+            moduleName = idea.module.name + '.main'
+        }
     }
 }
