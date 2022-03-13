@@ -2,9 +2,11 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'http://files.minecraftforge.net/maven' }
+        maven { url = 'http://lss233.littleservice.cn/repositories/minecraft' }
         jcenter()
         mavenCentral()
     }
+
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
     }
