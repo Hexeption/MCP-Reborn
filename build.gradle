@@ -33,10 +33,10 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '1.18.2'
-    mcp_version = '20220228.144236'
+    minecraft_version = '1.19'
+    mcp_version = '20220607.102129'
     mappings_channel = 'official'
-    mappings_version = '1.18.2'
+    mappings_version = '1.19'
     spi_version = '4.0.10'
 }
 
@@ -88,7 +88,7 @@ task runclient(type: JavaExec) {
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', downloadAssets.output
-    args '--assetIndex', "1.18"
+    args '--assetIndex', "1.19"
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
     workingDir 'run'
