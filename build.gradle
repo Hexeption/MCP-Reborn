@@ -94,6 +94,8 @@ task runclient(type: JavaExec) {
     workingDir 'run'
 }
 
+
+
 task setup() {
     group = "MCP"
     description = "Setups the dev workspace"
@@ -114,6 +116,16 @@ task copyAssets {
         from downloadAssets.output.path
         into 'run/assets'
     }
+}
+
+task runserver(type: JavaExec) {
+    mkdir 'runserver'
+    group = "MCP"
+    description = "Runs the server"
+    standardInput = System.in
+    classpath sourceSets.main.runtimeClasspath
+    main 'net.minecraft.server.Main'
+    workingDir 'runserver'
 }
 
 idea.project.settings {
