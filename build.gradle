@@ -11,7 +11,8 @@ buildscript {
     }
 }
 
-import net.minecraftforge.forge.tasks.*
+import net.minecraftforge.gradle.common.util.Utils
+import net.minecraftforge.gradle.common.util.VersionJson
 import org.jetbrains.gradle.ext.*
 
 apply plugin: 'eclipse'
@@ -78,47 +79,52 @@ jar {
     }
 }
 
-task runclient(type: JavaExec) {
+var assetsFolder = file('run/assets')
+
+tasks.register('runclient', JavaExec) {
     group = "MCP"
     description = "Runs the client"
     classpath sourceSets.main.runtimeClasspath
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         jvmArgs '-XstartOnFirstThread'
     }
+
+    var runFolder = file('run')
+    var versionJson = Utils.loadJson(downloadAssets.getMeta().get().getAsFile(), VersionJson.class)
+
+    workingDir runFolder
     args '--gameDir', '.'
     args '--version', minecraft_version
-    args '--assetsDir', downloadAssets.output
-    args '--assetIndex', "1.19"
+    args '--assetsDir', runFolder.relativePath(assetsFolder)
+    args '--assetIndex', versionJson.assetIndex.id
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
-    workingDir 'run'
 }
 
 
-
-task setup() {
+tasks.register('setup') {
     group = "MCP"
     description = "Setups the dev workspace"
     dependsOn ':extractMapped'
-    mkdir 'run/assets'
+    mkdir assetsFolder
     copy {
         from downloadAssets.output.path
-        into 'run/assets'
+        into assetsFolder
     }
 }
 
-task copyAssets {
+tasks.register('copyAssets') {
     group = "MCP"
     description = "Download and place the assets into the run folder"
     dependsOn ':downloadAssets'
     mkdir 'run/assets'
     copy {
         from downloadAssets.output.path
-        into 'run/assets'
+        into assetsFolder
     }
 }
 
-task runserver(type: JavaExec) {
+tasks.register('runserver', JavaExec) {
     mkdir 'runserver'
     group = "MCP"
     description = "Runs the server"
