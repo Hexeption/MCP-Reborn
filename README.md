@@ -14,7 +14,7 @@
 
 ### How to use
 
-1. Import the build.gradle in Intellij.
+1. Import the build.gradle and settings.gradle in Intellij.
 
 2. Run the Gradle "setup" task in the mcp folder in IntelliJ - you may need to select View > Tool Windows > Gradle to get this option.
 
