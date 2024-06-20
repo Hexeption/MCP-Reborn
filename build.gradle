@@ -173,6 +173,8 @@ tasks.register('copyInbuildAssetsAsResources') {
     group = "MCP"
     description = "Copies built-in assets as resources"
     doLast {
+        def inbuild_assets_dir = file("src/main/resources")
+
         def mcJar = file("${Utils.getMCDir().path}/versions/${minecraft_version}/${minecraft_version}.jar")
         if (!mcJar.exists()){
             println("The required version is missing")
@@ -184,7 +186,7 @@ tasks.register('copyInbuildAssetsAsResources') {
         }
         inbuild_assets_dir.mkdir()
         copy {
-            from zipTree(MC_Jar).matching {
+            from zipTree(mcJar).matching {
                 include 'assets/**'
                 include 'data/**'
                 include 'pack.png'
