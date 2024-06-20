@@ -134,6 +134,66 @@ tasks.register('runserver', JavaExec) {
     workingDir 'runserver'
 }
 
+tasks.register('copyInbuildAssetsToJar') {
+    group = "MCP"
+    description = "Copies built-in assets"
+    doLast {
+        def mcJar = file("${Utils.getMCDir().path}/versions/${minecraft_version}/${minecraft_version}.jar")
+        if (!mcJar.exists()){
+            println("The required version is missing")
+            println("Check the path: ${mcJar.path}")
+            return
+        }
+        def buildedJar = file("build/libs/${rootProject.name}-${version}.jar")
+        if (!buildedJar.exists()){
+            println("First generate the Jar file using the 'build' task")
+            return
+        }
+        copy {
+            from zipTree(mcJar).matching {
+                include 'assets/**'
+                include 'data/**'
+                include 'pack.png'
+                include 'pack.mcmeta'
+            }
+            into file("build/libs/tmp")
+        }
+        copy{
+            from zipTree(buildedJar)
+            into file("build/libs/tmp")
+        }
+        buildedJar.delete()
+        file("build/libs/tmp/META-INF").deleteDir()
+        ant.zip(destfile: "build/libs/${rootProject.name}-${version}.jar", basedir: "build/libs/tmp")
+        file("build/libs/tmp").deleteDir()
+    }
+}
+
+tasks.register('copyInbuildAssetsAsResources') {
+    group = "MCP"
+    description = "Copies built-in assets as resources"
+    doLast {
+        def mcJar = file("${Utils.getMCDir().path}/versions/${minecraft_version}/${minecraft_version}.jar")
+        if (!mcJar.exists()){
+            println("The required version is missing")
+            println("Check the path: ${mcJar.path}")
+            return
+        }
+        if (inbuild_assets_dir.exists()) {
+            inbuild_assets_dir.deleteDir()
+        }
+        inbuild_assets_dir.mkdir()
+        copy {
+            from zipTree(MC_Jar).matching {
+                include 'assets/**'
+                include 'data/**'
+                include 'pack.png'
+                include 'pack.mcmeta'
+            }
+            into inbuild_assets_dir
+        }
+    }
+}
 idea.project.settings {
     runConfigurations {
         "Minecraft"(Application) {
