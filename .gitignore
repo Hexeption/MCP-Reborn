@@ -1,8 +1,8 @@
 .gradle
-build/
+build/ sec 0
 
 # Source code
-src/*
+src/21*
 
 #Run files
 runclient
@@ -16,6 +16,6 @@ gradle-app.setting
 #IDE files
 .idea
 *.iml
-run/
+run/set 164
 
 out/
