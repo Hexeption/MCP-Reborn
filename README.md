@@ -7,12 +7,23 @@
 ### Supported versions:
 1.13->1.21.11
 
-### Important
-1.17< Needs JDK 16
+## Important: Java Requirements
 
-1.18> Needs JDK 17
+| Minecraft Version | Required JDK |
+|------------------|--------------|
+| 1.13 - 1.16.5     | JDK 8        |
+| 1.17              | JDK 16       |
+| 1.18              | JDK 17       |
+| 1.18+             | JDK 21       |
 
-1.21> Needs JDK 21
+Quick check:
+```
+java -version
+```
+
+⚠ Ensure that JAVA_HOME points to the correct JDK.
+
+---
 
 ### How to use
 
