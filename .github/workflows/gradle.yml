@@ -1,20 +1,36 @@
-name: Java CI
+name: Minecraft Decompiler CI
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
-  build:
-
+  decompile-job:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
     - name: Set up JDK 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
-        distribution: 'adopt'
-        java-version: 21
-    - name: Setup
-      run: chmod +x gradlew && ./gradlew setup
-    - name: Build with Gradle
-      run: chmod +x gradlew && ./gradlew build
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Decompile Minecraft
+      # Chúng ta chỉ chạy setup để giải mã, không chạy build để tiết kiệm thời gian
+      run: |
+        chmod +x gradlew
+        ./gradlew setup --no-daemon
+
+    - name: Archive Source Code
+      # Bước này sẽ gom các file .java quan trọng nhất vào một thư mục
+      run: |
+        mkdir -p mc_source
+        cp -r build/mcp/src/main/java/net/minecraft mc_source/
+        
+    - name: Upload Artifact
+      # Đây là bước tạo nút Download trên GitHub
+      uses: actions/upload-artifact@v4
+      with:
+        name: Minecraft-1.21-Source
+        path: mc_source/
