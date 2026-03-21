@@ -13,6 +13,7 @@
 1.18> Needs JDK 17
 
 1.21> Needs JDK 21
+
 26.1> Needs JDK 25
 
 ### How to use
