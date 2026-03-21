@@ -23,7 +23,7 @@ println(' Java: ' + System.getProperty('java.version') +
         ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ')' +
         ' Arch: ' + System.getProperty('os.arch'))
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 configurations {
     shade
@@ -98,7 +98,7 @@ tasks.register('runclient', JavaExec) {
     args '--assetsDir', runFolder.relativePath(assetsFolder)
     args '--assetIndex', versionJson.assetIndex.id
     args '--accessToken', '0'
-    main 'net.minecraft.client.main.Main'
+    mainClass = 'net.minecraft.client.main.Main'
 }
 
 
@@ -130,7 +130,7 @@ tasks.register('runserver', JavaExec) {
     description = "Runs the server"
     standardInput = System.in
     classpath sourceSets.main.runtimeClasspath
-    main 'net.minecraft.server.Main'
+    mainClass = 'net.minecraft.server.Main'
     workingDir 'runserver'
 }
 
