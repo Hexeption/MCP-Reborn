@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/hexeption-mcp-reborn-badge.png)](https://mseep.ai/app/hexeption-mcp-reborn)
+
 ## MCP-Reborn [![Build Status](https://github.com/Hexeption/MCP-Reborn/workflows/Java%20CI/badge.svg)](https://github.com/Hexeption/MCP-Reborn/actions?workflow=Java+CI)
 
 #### MCP-Reborn is an MCP (Mod Coder Pack) for minecraft for making modded clients for minecraft and researching its code. It is based on MCPConfig and ForgeGradle by MinecraftForge Team.
