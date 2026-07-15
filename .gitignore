@@ -19,3 +19,7 @@ gradle-app.setting
 run/
 
 out/
+
+# ForgeGradle generated
+net/
+projects/
