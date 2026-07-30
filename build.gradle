@@ -109,11 +109,13 @@ tasks.register('runclient', JavaExec) {
 tasks.register('setup') {
     group = "MCP"
     description = "Setups the dev workspace"
-    dependsOn ':extractMapped'
-    mkdir assetsFolder
-    copy {
-        from downloadAssets.output.path
-        into assetsFolder
+    dependsOn ':extractMapped', ':downloadAssets'
+    doLast {
+        mkdir assetsFolder
+        copy {
+            from downloadAssets.output.path
+            into assetsFolder
+        }
     }
 }
 
@@ -121,10 +123,12 @@ tasks.register('copyAssets') {
     group = "MCP"
     description = "Download and place the assets into the run folder"
     dependsOn ':downloadAssets'
-    mkdir 'run/assets'
-    copy {
-        from downloadAssets.output.path
-        into assetsFolder
+    doLast {
+        mkdir 'run/assets'
+        copy {
+            from downloadAssets.output.path
+            into assetsFolder
+        }
     }
 }
 
