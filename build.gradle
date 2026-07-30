@@ -84,21 +84,25 @@ var assetsFolder = file('run/assets')
 tasks.register('runclient', JavaExec) {
     group = "MCP"
     description = "Runs the client"
+    dependsOn ':downloadAssets'
     classpath sourceSets.main.runtimeClasspath
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         jvmArgs '-XstartOnFirstThread'
     }
 
     var runFolder = file('run')
-    var versionJson = Utils.loadJson(downloadAssets.getMeta().get().getAsFile(), VersionJson.class)
 
     workingDir runFolder
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', runFolder.relativePath(assetsFolder)
-    args '--assetIndex', versionJson.assetIndex.id
     args '--accessToken', '0'
     mainClass = 'net.minecraft.client.main.Main'
+
+    doFirst {
+        var versionJson = Utils.loadJson(downloadAssets.getMeta().get().getAsFile(), VersionJson.class)
+        args '--assetIndex', versionJson.assetIndex.id
+    }
 }
 
 
