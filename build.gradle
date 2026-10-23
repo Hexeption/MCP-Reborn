@@ -86,11 +86,13 @@ task runclient(type: JavaExec) {
 task setup() {
     group = "MCP"
     description = "Setups the dev workspace"
-    dependsOn ':extractMapped'
-    mkdir 'run/assets'
-    copy {
-        from downloadAssets.output.path
-        into 'run/assets'
+    dependsOn ':extractMapped', ':downloadAssets'
+    doLast {
+        mkdir 'run/assets'
+        copy {
+            from downloadAssets.output.path
+            into 'run/assets'
+        }
     }
 }
 
@@ -98,9 +100,40 @@ task copyAssets {
     group = "MCP"
     description = "Download and place the assets into the run folder"
     dependsOn ':downloadAssets'
-    mkdir 'run/assets'
-    copy {
-        from downloadAssets.output.path
-        into 'run/assets'
+    doLast {
+        mkdir 'run/assets'
+        copy {
+            from downloadAssets.output.path
+            into 'run/assets'
+        }
+    }
+}
+
+task serverJar(type: Jar) {
+    group = "MCP"
+    description = "Builds a runnable server jar into build/server"
+    archiveName = 'server.jar'
+    destinationDir = file("$buildDir/server")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    def clientExtra = { sourceSets.main.runtimeClasspath.find { it.name == 'client-extra.jar' } }
+    def libraries = { sourceSets.main.runtimeClasspath.filter { it.isFile() && it.name.endsWith('.jar') && it.name != 'client-extra.jar' } }
+
+    from sourceSets.main.output
+    from({ zipTree(clientExtra()) }) {
+        exclude 'META-INF/**'
+    }
+
+    doFirst {
+        manifest.attributes(
+                'Main-Class': 'net.minecraft.server.Main',
+                'Class-Path': libraries().collect { 'libraries/' + it.name }.join(' ')
+        )
+    }
+    doLast {
+        copy {
+            from libraries()
+            into "$buildDir/server/libraries"
+        }
     }
 }
