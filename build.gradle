@@ -84,32 +84,38 @@ var assetsFolder = file('run/assets')
 tasks.register('runclient', JavaExec) {
     group = "MCP"
     description = "Runs the client"
+    dependsOn ':downloadAssets'
     classpath sourceSets.main.runtimeClasspath
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         jvmArgs '-XstartOnFirstThread'
     }
 
     var runFolder = file('run')
-    var versionJson = Utils.loadJson(downloadAssets.getMeta().get().getAsFile(), VersionJson.class)
 
     workingDir runFolder
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', runFolder.relativePath(assetsFolder)
-    args '--assetIndex', versionJson.assetIndex.id
     args '--accessToken', '0'
     mainClass = 'net.minecraft.client.main.Main'
+
+    doFirst {
+        var versionJson = Utils.loadJson(downloadAssets.getMeta().get().getAsFile(), VersionJson.class)
+        args '--assetIndex', versionJson.assetIndex.id
+    }
 }
 
 
 tasks.register('setup') {
     group = "MCP"
     description = "Setups the dev workspace"
-    dependsOn ':extractMapped'
-    mkdir assetsFolder
-    copy {
-        from downloadAssets.output.path
-        into assetsFolder
+    dependsOn ':extractMapped', ':downloadAssets'
+    doLast {
+        mkdir assetsFolder
+        copy {
+            from downloadAssets.output.path
+            into assetsFolder
+        }
     }
 }
 
@@ -117,10 +123,12 @@ tasks.register('copyAssets') {
     group = "MCP"
     description = "Download and place the assets into the run folder"
     dependsOn ':downloadAssets'
-    mkdir 'run/assets'
-    copy {
-        from downloadAssets.output.path
-        into assetsFolder
+    doLast {
+        mkdir 'run/assets'
+        copy {
+            from downloadAssets.output.path
+            into assetsFolder
+        }
     }
 }
 
@@ -132,6 +140,35 @@ tasks.register('runserver', JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     mainClass = 'net.minecraft.server.Main'
     workingDir 'runserver'
+}
+
+tasks.register('serverJar', Jar) {
+    group = "MCP"
+    description = "Builds a runnable server jar into build/server"
+    archiveFileName = 'server.jar'
+    destinationDirectory = file("$buildDir/server")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    def clientExtra = { sourceSets.main.runtimeClasspath.find { it.name == 'client-extra.jar' } }
+    def libraries = { sourceSets.main.runtimeClasspath.filter { it.isFile() && it.name.endsWith('.jar') && it.name != 'client-extra.jar' } }
+
+    from sourceSets.main.output
+    from({ zipTree(clientExtra()) }) {
+        exclude 'META-INF/**'
+    }
+
+    doFirst {
+        manifest.attributes(
+                'Main-Class': 'net.minecraft.server.Main',
+                'Class-Path': libraries().collect { 'libraries/' + it.name }.join(' ')
+        )
+    }
+    doLast {
+        copy {
+            from libraries()
+            into "$buildDir/server/libraries"
+        }
+    }
 }
 
 idea.project.settings {
