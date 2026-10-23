@@ -71,6 +71,11 @@ patcher {
     mcVersion = minecraft_version
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.fork = true
+    options.forkOptions.memoryMaximumSize = '6g'
+}
+
 jar {
     configurations.shade.each { dep ->
         from(project.zipTree(dep)) {
