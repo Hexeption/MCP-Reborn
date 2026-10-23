@@ -142,6 +142,35 @@ tasks.register('runserver', JavaExec) {
     workingDir 'runserver'
 }
 
+tasks.register('serverJar', Jar) {
+    group = "MCP"
+    description = "Builds a runnable server jar into build/server"
+    archiveFileName = 'server.jar'
+    destinationDirectory = file("$buildDir/server")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    def clientExtra = { sourceSets.main.runtimeClasspath.find { it.name == 'client-extra.jar' } }
+    def libraries = { sourceSets.main.runtimeClasspath.filter { it.isFile() && it.name.endsWith('.jar') && it.name != 'client-extra.jar' } }
+
+    from sourceSets.main.output
+    from({ zipTree(clientExtra()) }) {
+        exclude 'META-INF/**'
+    }
+
+    doFirst {
+        manifest.attributes(
+                'Main-Class': 'net.minecraft.server.Main',
+                'Class-Path': libraries().collect { 'libraries/' + it.name }.join(' ')
+        )
+    }
+    doLast {
+        copy {
+            from libraries()
+            into "$buildDir/server/libraries"
+        }
+    }
+}
+
 idea.project.settings {
     runConfigurations {
         "Minecraft"(Application) {
