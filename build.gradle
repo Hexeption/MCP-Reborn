@@ -177,6 +177,35 @@ tasks.register('serverJar', Jar) {
     }
 }
 
+tasks.register('installClient', Jar) {
+    group = "MCP"
+    description = "Installs the client into the Minecraft launcher's versions folder"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    def os = System.getProperty('os.name').toLowerCase()
+    def home = System.getProperty('user.home')
+    def mcDir = file(project.findProperty('mcDir') ?: (os.contains('win') ? System.getenv('APPDATA') + '/.minecraft'
+            : os.contains('mac') ? home + '/Library/Application Support/minecraft' : home + '/.minecraft'))
+    def versionName = project.findProperty('versionName') ?: minecraft_version + '-mcp'
+    def versionDir = new File(mcDir, 'versions/' + versionName)
+
+    archiveFileName = versionName + '.jar'
+    destinationDirectory = versionDir
+
+    from sourceSets.main.output
+    from({ zipTree(sourceSets.main.runtimeClasspath.find { it.name == 'client-extra.jar' }) }) {
+        exclude 'META-INF/**'
+    }
+
+    doLast {
+        def json = new groovy.json.JsonSlurper().parse(project(':mcp').file('build/mcp/downloadJson/version.json'))
+        json.remove('downloads')
+        json.id = versionName
+        new File(versionDir, versionName + '.json').text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(json))
+        println "Installed $versionName into $versionDir"
+    }
+}
+
 idea.project.settings {
     runConfigurations {
         "Minecraft"(Application) {
