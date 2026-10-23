@@ -26,12 +26,11 @@ project(':mcp') {
 
 evaluationDependsOn(':mcp')
 apply plugin: 'eclipse'
-apply plugin: 'net.minecraftforge.gradle.forgedev.patcher'
 repositories {
-    mavenCentral()
-    maven { url = 'http://repo.hexeption.co.uk/artifactory/list/Strezz-Central/'}
     maven { url = 'https://libraries.minecraft.net/'}
+    mavenCentral()
 }
+apply plugin: 'net.minecraftforge.gradle.forgedev.patcher'
 patcher {
     parent = project(':mcp')
     patchedSrc = file('src/main/java')
@@ -54,4 +53,33 @@ task setup() {
     group = "MCP"
     description = "Setups the dev workspace"
     dependsOn ':extractMapped'
+}
+
+task serverJar(type: Jar) {
+    group = "MCP"
+    description = "Builds a runnable server jar into build/server"
+    archiveName = 'server.jar'
+    destinationDir = file("$buildDir/server")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    def clientExtra = { sourceSets.main.runtimeClasspath.find { it.name == 'client-extra.jar' } }
+    def libraries = { sourceSets.main.runtimeClasspath.filter { it.isFile() && it.name.endsWith('.jar') && it.name != 'client-extra.jar' } }
+
+    from sourceSets.main.output
+    from({ zipTree(clientExtra()) }) {
+        exclude 'META-INF/**'
+    }
+
+    doFirst {
+        manifest.attributes(
+                'Main-Class': 'net.minecraft.server.MinecraftServer',
+                'Class-Path': libraries().collect { 'libraries/' + it.name }.join(' ')
+        )
+    }
+    doLast {
+        copy {
+            from libraries()
+            into "$buildDir/server/libraries"
+        }
+    }
 }
