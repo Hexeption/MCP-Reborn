@@ -34,25 +34,13 @@ Gradle has to run on that JDK as well. In IntelliJ you set it under Settings > B
 
 4. Run `runclient` to compile your changes and start the game. You can also use the "Minecraft" run configuration that IntelliJ picks up from the project.
 
-### Building a client for the launcher
+### Installing into the launcher
 
-1. Run the `build` task. Your jar ends up in `build/libs`.
+1. Run the `installClient` task. It builds your client and puts it in the launcher's versions folder as `1.18.2-mcp`, json included.
 
-    <img width="266" alt="a647ab0eb336062ffd80c8e053e10266" src="https://user-images.githubusercontent.com/4052647/46925963-a297eb80-d026-11e8-8b02-cb621b559511.png">
+2. Restart the launcher, go to Installations, make a new installation and pick `1.18.2-mcp` as its version.
 
-2. Open your Minecraft versions folder. It's `%APPDATA%\.minecraft\versions` on Windows, `~/Library/Application Support/minecraft/versions` on macOS and `~/.minecraft/versions` on Linux.
-
-3. Make a copy of the folder for the version you modded and give it a new name, for example `1.18.2_my_mod`.
-
-4. In the new folder, delete the jar and rename the json to match the folder, so `1.18.2_my_mod.json`.
-
-5. Open the json in a text editor. Delete the whole `"downloads"` section so the launcher doesn't fetch the vanilla jar again, then set `"id"` to the folder name: `"id": "1.18.2_my_mod"`.
-
-6. Copy your jar from `build/libs` into the folder and rename it to `1.18.2_my_mod.jar`.
-
-7. Open the vanilla `1.18.2.jar` and your jar in an archive manager (7-Zip works on Windows). Copy the `assets` and `data` folders and the loose files at the top of the vanilla jar, such as `pack.png`, into your jar. Then delete `META-INF` from your jar.
-
-8. Restart the launcher, go to Installations, make a new installation and pick `1.18.2_my_mod` as its version.
+To use a different name, pass `-PversionName=my_mod`. If your `.minecraft` folder isn't in the default place, point the task at it with `-PmcDir=/path/to/.minecraft`.
 
 ### Building a server
 
