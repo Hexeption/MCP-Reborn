@@ -92,7 +92,7 @@ task runclient(type: JavaExec) {
     args '--gameDir', '.'
     args '--version', minecraft_version
     args '--assetsDir', 'assets'
-    args '--assetIndex', '{asset_index}'
+    args '--assetIndex', "1.14"
     args '--accessToken', '0'
     main 'net.minecraft.client.main.Main'
     workingDir 'runclient'
