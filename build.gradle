@@ -34,10 +34,10 @@ group = 'me.yourname'
 version = '1.0.0'
 
 ext {
-    minecraft_version = '26.2'
-    mcp_version = '20260616.103818'
+    minecraft_version = '26.3'
+    mcp_version = '20260918.230105'
     mappings_channel = 'official'
-    mappings_version = '26.2'
+    mappings_version = '26.3'
     spi_version = '8.0.0'
 }
 
@@ -89,6 +89,7 @@ tasks.register('runclient', JavaExec) {
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         jvmArgs '-XstartOnFirstThread'
     }
+    jvmArgs '-XX:StackShadowPages=32'
 
     var runFolder = file('run')
 
@@ -148,6 +149,7 @@ idea.project.settings {
             mainClass = 'mcp.client.Start'
             workingDirectory = "$projectDir/run"
             moduleName = idea.module.name + '.main'
+            jvmArgs = '-XX:StackShadowPages=32'
         }
     }
 }
